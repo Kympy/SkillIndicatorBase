@@ -1,0 +1,20 @@
+    protected Vector2 CorrectInputVector(Vector2 inputVector, float deadZone)
+    {
+	    float correctedX = 0f, correctedY = 0f;
+	    float inputMagnitude = inputVector.magnitude;
+	    
+		// 데드존을 벗어나는 경우에만 보정
+		if (inputMagnitude > deadZone)
+		{
+			float correctedMagnitude = Mathf.Max(0, (inputMagnitude - deadZone) / (1 - deadZone));
+			float correctionFactor = correctedMagnitude / inputMagnitude;
+
+			correctedX = inputVector.x * correctionFactor;
+			correctedY = inputVector.y * correctionFactor;
+		}
+	    
+	    correctedX = Mathf.Clamp(correctedX, -1f, 1f);
+	    correctedY = Mathf.Clamp(correctedY, -1f, 1f);
+	    
+        return new Vector2(correctedX, correctedY);
+    }
